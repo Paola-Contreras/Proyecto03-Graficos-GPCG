@@ -27,17 +27,37 @@ rend.setShaders(vertex_shader, fragment_shader)
 # Model No. 1 Plant 
 rend.target.z -= 5
 
-face = Model("indoor plant_02.obj", "indoor plant_2_COL.bmp")
+plant = Model("indoor plant_02.obj", "indoor plant_2_COL.bmp")
+
+plant.position.z -= 5
+plant.position.y = -1.3
+
+plant.scale.x = 0.4
+plant.scale.y = 0.4
+plant.scale.z = 0.4
+
+# Model No. 2 Sofa 
+Sofa = Model("Couch.obj", "Couch_Base_Color.bmp")
+
+Sofa.position.z -= 5
+Sofa.position.y = -1
+
+Sofa.scale.x = 1.5
+Sofa.scale.y = 1.5
+Sofa.scale.z = 1.5
+
+
+# Model No. 3 Sofa 
+face = Model("Yoshi.obj", "Yoshi.bmp")
 
 face.position.z -= 5
-face.position.y = -1.3
+face.position.y = -1
 
-face.scale.x = 0.4
-face.scale.y = 0.4
-face.scale.z = 0.4
+face.scale.x = 1.5
+face.scale.y = 1.5
+face.scale.z = 1.5
 
-
-rend.scene.append( face )
+rend.scene.append( Sofa )
 
 
 isRunning = True
@@ -100,7 +120,7 @@ while isRunning:
     rend.camPosition.z = rend.target.z + cos(radians(rend.angle)) * rend.camDistance
     
 
-     # --------------- LIGHTS MOVEMENT ----------------------
+    # --------------- LIGHTS MOVEMENT ----------------------
     if keys[K_LEFT]:
         rend.pointLight.x -= 10 * deltaTime
     elif keys[K_RIGHT]:
@@ -110,10 +130,11 @@ while isRunning:
     elif keys[K_DOWN]:
         rend.pointLight.y -= 10 * deltaTime
 
-
+    # --------------- TIME ----------------------
     deltaTime = clock.tick(60) / 1000
     rend.time += deltaTime
 
+    # -------------------------------------------
     rend.update()
     rend.render()
     pygame.display.flip()
