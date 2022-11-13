@@ -24,6 +24,7 @@ rend.setShaders(vertex_shader, fragment_shader)
 
  # --------------- MODEL ----------------------
 
+# Model No. 1 Plant 
 rend.target.z -= 5
 
 face = Model("indoor plant_02.obj", "indoor plant_2_COL.bmp")
@@ -53,10 +54,21 @@ while isRunning:
             if event.key == pygame.K_ESCAPE:
                 isRunning = False
 
-            elif event.key == pygame.K_z:
-                rend.filledMode()
-            elif event.key == pygame.K_x:
-                rend.wireframeMode()
+        # --------------- SHADERS ----------------------
+            elif event.key == pygame.K_1:
+                rend.setShaders(vertex_shader, fragment_shader)
+            elif event.key == pygame.K_2:
+                rend.setShaders(vertex_shader, toon_shader)
+            elif event.key == pygame.K_3:
+                rend.setShaders(fat_shader, fragment_shader)
+            elif event.key == pygame.K_4:
+                rend.setShaders(vertex_shader, rainbow_shader)
+            elif event.key == pygame.K_5:
+                rend.setShaders(sphere_shader, fragment_shader)
+            elif event.key == pygame.K_6:
+                rend.setShaders(vertex_shader, OnOff_shader)
+            #elif event.key == pygame.K_7:
+            #    rend.wireframeMode()
 
     # --------------- CAMARA MOVEMENTS ----------------------
 
@@ -81,10 +93,6 @@ while isRunning:
         rend.camPosition.y = -2
     elif rend.camPosition.y > 2:
         rend.camPosition.y = 2
-
-
-
-
 
     rend.target.y = rend.camPosition.y
 
