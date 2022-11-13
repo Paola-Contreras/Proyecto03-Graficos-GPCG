@@ -85,6 +85,7 @@ rainbow_shader ='''
 #version 450 core
 
 out vec4 fragColor;
+uniform float time;
 
 in vec2 UVs;
 in vec3 norms;
@@ -96,24 +97,27 @@ uniform sampler2D tex;
 
 void main()
 {
-    float intensity = dot(norms, normalize(pointLight - pos));
+    float intensity = dot(norms+ sin(time ), normalize(pointLight  - pos));
+
     if (intensity < 0.2){
-        fragColor = texture(tex, UVs) *  vec4(0.3,0.5,0.8,1.0);
-    } else if (intensity < 0.5){
-      fragColor = texture(tex, UVs) *  vec4(0.6,0.9,0.1,1.0);
-    } else if (intensity < 0.7){
-       fragColor = texture(tex, UVs) *  vec4(0.9,0.2,0.4,1.0);
-    } else if (intensity < 0.9){
-       fragColor = texture(tex, UVs) *  vec4(0.2,0.6,0.8,1.0);
-    } else if (intensity < 0.94){
-       fragColor = texture(tex, UVs) *  vec4(0.5,0.3,0.3,1.0);
-    } else {
-       fragColor = texture(tex, UVs) *  vec4(0,0,0,1.0);
+        fragColor = texture(tex, UVs) *  vec4(0.5019,0.5019,0.5019,1.0);
+    }else if (intensity < 0.4){
+        fragColor = texture(tex, UVs) *  vec4(0.5412,0.1686,0.8863,1.0);
+    } else if (intensity < 0.6){
+      fragColor = texture(tex, UVs) *  vec4(0.0,0.0,1.0,1.0);
+    } else if (intensity < 0.8){
+       fragColor = texture(tex, UVs) *  vec4(1.0,0.5490,0.0,1.0);
+    } else if (intensity < 1.0){
+       fragColor = texture(tex, UVs) *  vec4(0.6039,0.8039,0.0,1.0);
+    } else if (intensity < 1.7){
+       fragColor = texture(tex, UVs) *  vec4(1.0,0.8431,0.0,1.0);
+    }else {
+       fragColor = texture(tex, UVs) *  vec4(1.0,0.0,0.0,1.0);
     }
 }
 '''
 
-deform_shader ='''
+fat_shader ='''
 #version 450 core
 
 layout (location = 0) in vec3 position;
@@ -164,5 +168,31 @@ void main()
 
     pos = (modelMatrix * vec4( position + normals, 1.0)).xyz;
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4( normals + position/10, 1.0);
+}
+'''
+
+OnOff_shader ='''
+#version 450 core
+
+out vec4 fragColor;
+
+uniform float time;
+
+in vec2 UVs;
+in vec3 norms;
+in vec3 pos;
+
+uniform vec3 pointLight;
+
+uniform sampler2D tex;
+
+void main()
+{
+    float intensity = dot(norms, normalize(pointLight - pos));
+    if (cos(time*3)/10 < 0){
+        fragColor = texture(tex, UVs) *  vec4(1,1,1,1.0);
+    } else {
+       fragColor = texture(tex, UVs) *  vec4(0,0,0,1.0);
+    }
 }
 '''

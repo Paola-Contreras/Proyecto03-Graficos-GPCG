@@ -22,13 +22,18 @@ rend = Renderer(screen)
 
 rend.setShaders(vertex_shader, fragment_shader)
 
-rend.target.z -= 10
+ # --------------- MODEL ----------------------
+
+rend.target.z -= 5
+
 face = Model("indoor plant_02.obj", "indoor plant_2_COL.bmp")
 
-face.position.z -= 20
-face.scale.x = 1
-face.scale.y = 1
-face.scale.z = 1
+face.position.z -= 5
+face.position.y = -1.3
+
+face.scale.x = 0.4
+face.scale.y = 0.4
+face.scale.z = 0.4
 
 
 rend.scene.append( face )
@@ -48,42 +53,37 @@ while isRunning:
             if event.key == pygame.K_ESCAPE:
                 isRunning = False
 
-            #Shaders
-            elif event.key == pygame.K_1:
-                rend.setShaders(vertex_shader, fragment_shader)
-            elif event.key == pygame.K_2:
-                rend.setShaders(vertex_shader, toon_shader)
-            elif event.key == pygame.K_3:
-                rend.setShaders(deform_shader, fragment_shader)
-            elif event.key == pygame.K_4:
-                rend.setShaders(vertex_shader, rainbow_shader)
-            elif event.key == pygame.K_5:
-                rend.setShaders(sphere_shader, fragment_shader)
-            elif event.key == pygame.K_6:
-               rend.wireframeMode()
+            elif event.key == pygame.K_z:
+                rend.filledMode()
+            elif event.key == pygame.K_x:
+                rend.wireframeMode()
 
+    # --------------- CAMARA MOVEMENTS ----------------------
 
-    # CAMARA 
-    #Zoom in & Zoom out
-    if keys[K_q]:
-        if rend.camDistance > 2:
-            rend.camDistance -= 2 * deltaTime
-    elif keys[K_e]:
-        if rend.camDistance < 10:
-            rend.camDistance += 2 * deltaTime
-    #Right & Left
-    if keys[K_a]:
-        rend.angle -= 30 * deltaTime
-    elif keys[K_d]:
-        rend.angle += 30 * deltaTime
+    mousepositions = pygame.mouse.get_rel()
+
+    #Zoom In & Out
+    if event.type == pygame.MOUSEWHEEL:
+        if rend.camDistance >= 2 and rend.camDistance <= 10:
+            rend.camDistance -= (event.y * 2) * deltaTime
+        elif rend.camDistance < 2:
+            rend.camDistance = 2 
+        elif rend.camDistance > 10:
+            rend.camDistance = 10
+
+    #Left & Right
+    rend.angle -= mousepositions[0]* deltaTime * 13
 
     #Up & Down
-    if keys[K_w]:
-        if rend.camPosition.y < 2:
-            rend.camPosition.y += 5 * deltaTime
-    elif keys[K_s]:
-        if rend.camPosition.y > -2:
-            rend.camPosition.y -= 5 * deltaTime
+    if rend.camPosition.y >= -2 and rend.camPosition.y <= 2:
+        rend.camPosition.y += mousepositions[1]* deltaTime
+    elif rend.camPosition.y < -2:
+        rend.camPosition.y = -2
+    elif rend.camPosition.y > 2:
+        rend.camPosition.y = 2
+
+
+
 
 
     rend.target.y = rend.camPosition.y
@@ -91,7 +91,8 @@ while isRunning:
     rend.camPosition.x = rend.target.x + sin(radians(rend.angle)) * rend.camDistance
     rend.camPosition.z = rend.target.z + cos(radians(rend.angle)) * rend.camDistance
     
-    #Light
+
+     # --------------- LIGHTS MOVEMENT ----------------------
     if keys[K_LEFT]:
         rend.pointLight.x -= 10 * deltaTime
     elif keys[K_RIGHT]:
