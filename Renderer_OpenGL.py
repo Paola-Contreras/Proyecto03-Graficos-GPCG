@@ -27,7 +27,7 @@ rend.setShaders(vertex_shader, fragment_shader)
 # Model No. 1 Plant 
 rend.target.z -= 5
 
-plant = Model("indoor plant_02.obj", "indoor plant_2_COL.bmp")
+plant = Model("plant.obj", "indoor plant_2_COL.bmp")
 
 plant.position.z -= 5
 plant.position.y = -1.3
@@ -46,19 +46,38 @@ Sofa.scale.x = 1.5
 Sofa.scale.y = 1.5
 Sofa.scale.z = 1.5
 
+# Model No. 3 Ship 
+ship = Model("ship.obj", "ship_mat.bmp")
 
-# Model No. 3 Sofa 
-face = Model("Yoshi.obj", "Yoshi.bmp")
+ship.position.z -= 5
+ship.position.y = 0
 
-face.position.z -= 5
-face.position.y = -1
+ship.scale.x = 0.5
+ship.scale.y = 0.5
+ship.scale.z = 0.5
 
-face.scale.x = 1.5
-face.scale.y = 1.5
-face.scale.z = 1.5
+# Model No. 4 Shoe
+shoe = Model("shoe.obj", "shoe.bmp")
 
-rend.scene.append( Sofa )
+shoe.position.z -= 5
+shoe.position.y = 0
 
+shoe.scale.x = 0.5
+shoe.scale.y = 0.5
+shoe.scale.z = 0.5
+
+
+# Model No. 4 Penguin
+Penguin = Model("Penguin.obj", "Penguin.bmp")
+
+Penguin.position.z -= 4
+Penguin.position.y = 0
+
+Penguin.scale.x = 1.5
+Penguin.scale.y = 1.5
+Penguin.scale.z = 1.5
+
+rend.scene.append( Penguin )
 
 isRunning = True
 
