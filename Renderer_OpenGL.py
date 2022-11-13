@@ -70,21 +70,20 @@ shoe.scale.z = 0.5
 # Model No. 4 Penguin
 Penguin = Model("Penguin.obj", "Penguin.bmp")
 
-Penguin.position.z -= 4
+Penguin.position.z -= 5
 Penguin.position.y = 0
 
 Penguin.scale.x = 1.5
 Penguin.scale.y = 1.5
 Penguin.scale.z = 1.5
 
-rend.scene.append( Penguin )
+rend.scene.append( plant )
 
 isRunning = True
 
 while isRunning:
 
     keys = pygame.key.get_pressed()
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             isRunning = False
@@ -106,8 +105,26 @@ while isRunning:
                 rend.setShaders(sphere_shader, fragment_shader)
             elif event.key == pygame.K_6:
                 rend.setShaders(vertex_shader, OnOff_shader)
-            #elif event.key == pygame.K_7:
-            #    rend.wireframeMode()
+            
+        # --------------- CHANGE MODEL ----------------------
+            elif event.key == pygame.K_a:
+                rend.scene.pop()
+                rend.scene.append(plant)
+            elif event.key == pygame.K_s:
+                rend.scene.pop()
+                rend.scene.append(Sofa)
+            elif event.key == pygame.K_d:
+                rend.scene.pop()
+                rend.scene.append(ship)
+            elif event.key == pygame.K_f:
+                rend.scene.pop()
+                rend.scene.append(shoe)
+            elif event.key == pygame.K_g:
+                rend.scene.pop()
+                rend.scene.append(Penguin)
+
+               
+               
 
     # --------------- CAMARA MOVEMENTS ----------------------
 
